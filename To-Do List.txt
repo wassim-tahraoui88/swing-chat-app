@@ -1,0 +1,2 @@
+- Fix frame dragging resizing issue
+- Fix ResizeExtension in JSTX

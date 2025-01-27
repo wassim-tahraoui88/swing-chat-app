@@ -12,9 +12,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.Random;
 
-public class MainPanel extends JSTXPanel implements JSTXConstants {
+public class MainContainer extends JSTXPanel implements JSTXConstants {
 
-	public MainPanel() {
+	public MainContainer() {
 		super(new BorderLayout(BASE_PADDING, BASE_PADDING));
 		setBorder(new EmptyBorder(BASE_PADDING, BASE_PADDING, BASE_PADDING, BASE_PADDING));
 

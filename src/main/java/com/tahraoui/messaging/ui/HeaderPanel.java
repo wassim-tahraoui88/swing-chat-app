@@ -36,10 +36,10 @@ public class HeaderPanel extends JSTXPanel implements JSTXConstants {
 		titleLabel.setFont(titleLabel.getFont().deriveFont(24f));
 		titleLabel.setBorder(new EmptyBorder(0, BASE_PADDING,0, BASE_PADDING));
 
-		minimizeButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/toolbar/minimize.svg", ICON_SIZE));
-		maximizeButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/toolbar/maximize.svg", ICON_SIZE));
-		restoreButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/toolbar/maximize.svg", ICON_SIZE));
-		closeButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/toolbar/close.svg", ICON_SIZE));
+		minimizeButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/toolbar/minimize.svg", ICON_SIZE),false);
+		maximizeButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/toolbar/maximize.svg", ICON_SIZE),false);
+		restoreButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/toolbar/maximize.svg", ICON_SIZE),false);
+		closeButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/toolbar/close.svg", ICON_SIZE),false);
 
 		closeButton.setBackground(Color.RED);
 
