@@ -7,7 +7,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
-import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.Random;
@@ -15,8 +14,7 @@ import java.util.Random;
 public class MainContainer extends JSTXPanel implements JSTXConstants {
 
 	public MainContainer() {
-		super(new BorderLayout(BASE_PADDING, BASE_PADDING));
-		setBorder(new EmptyBorder(BASE_PADDING, BASE_PADDING, BASE_PADDING, BASE_PADDING));
+		super(new BorderLayout());
 
 		var box = Box.createVerticalBox();
 		box.setOpaque(true);
@@ -44,6 +42,10 @@ public class MainContainer extends JSTXPanel implements JSTXConstants {
 			box.add(panel);
 		}
 
-		add(new JScrollPane(box, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), BorderLayout.CENTER);
+		var scrollPane = new JScrollPane(box, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		var verticalScrollBar = scrollPane.getVerticalScrollBar();
+		verticalScrollBar.setUnitIncrement(16);
+
+		add(scrollPane, BorderLayout.CENTER);
 	}
 }

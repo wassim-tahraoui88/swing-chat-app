@@ -15,14 +15,13 @@ import com.tahraoui.jstx.util.SvgUtils;
 import javax.swing.Box;
 import javax.swing.JSeparator;
 import javax.swing.OverlayLayout;
-import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Insets;
 
 public class HeaderPanel extends JSTXPanel implements JSTXConstants {
 
-	private static final int ICON_SIZE = 24;
+	private static final int ICON_SIZE = 12;
 
 	private final Insets insets = new Insets(0, BASE_PADDING,0, BASE_PADDING);
 
@@ -34,12 +33,11 @@ public class HeaderPanel extends JSTXPanel implements JSTXConstants {
 
 		titleLabel = new JSTXLabel(Config.getInstance().getAppName(), JSTXLabel.CENTER);
 		titleLabel.setFont(titleLabel.getFont().deriveFont(24f));
-		titleLabel.setBorder(new EmptyBorder(0, BASE_PADDING,0, BASE_PADDING));
 
-		minimizeButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/toolbar/minimize.svg", ICON_SIZE),false);
-		maximizeButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/toolbar/maximize.svg", ICON_SIZE),false);
-		restoreButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/toolbar/maximize.svg", ICON_SIZE),false);
-		closeButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/toolbar/close.svg", ICON_SIZE),false);
+		minimizeButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/header/minimize.svg", ICON_SIZE));
+		maximizeButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/header/maximize.svg", ICON_SIZE));
+		restoreButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/header/restore.svg", ICON_SIZE));
+		closeButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/header/close.svg", ICON_SIZE));
 
 		closeButton.setBackground(Color.RED);
 
