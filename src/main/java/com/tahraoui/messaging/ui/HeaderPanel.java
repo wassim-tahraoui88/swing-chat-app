@@ -23,7 +23,7 @@ public class HeaderPanel extends JSTXPanel implements JSTXConstants {
 
 	private static final int ICON_SIZE = 12;
 
-	private final Insets insets = new Insets(0, BASE_PADDING,0, BASE_PADDING);
+	private final Insets insets = new Insets(BASE_PADDING, BASE_PADDING,BASE_PADDING, BASE_PADDING);
 
 	private final JSTXLabel titleLabel;
 	private final JSTXIconButton minimizeButton, maximizeButton, restoreButton, closeButton;

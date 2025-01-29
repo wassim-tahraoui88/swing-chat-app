@@ -47,5 +47,6 @@ public class Controller extends JSTXRoundPanel implements JSTXConstants {
 
 	public static void main() {
 		JSTXBootstrapper.getInstance().init(Controller::new);
+
 	}
 }
