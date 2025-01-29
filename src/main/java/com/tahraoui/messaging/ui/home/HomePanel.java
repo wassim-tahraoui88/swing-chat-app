@@ -2,12 +2,14 @@ package com.tahraoui.messaging.ui.home;
 
 import com.tahraoui.jstx.JSTXConstants;
 import com.tahraoui.jstx.button.JSTXButton;
+import com.tahraoui.jstx.input.JSTXNumberField;
 import com.tahraoui.jstx.input.JSTXPasswordField;
 import com.tahraoui.jstx.input.JSTXTextField;
 import com.tahraoui.jstx.panel.JSTXPanel;
 import com.tahraoui.jstx.text.JSTXLabel;
 import com.tahraoui.messaging.backend.ConnectionService;
 import com.tahraoui.messaging.model.UserCredentials;
+import com.tahraoui.messaging.util.NetworkUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,17 +31,26 @@ public class HomePanel extends JSTXPanel implements JSTXConstants {
 
 	public HomePanel() {
 		this.hostUsernameField = new JSTXTextField(15,"Enter username...");
-		this.hostPortField = new JSTXTextField(15,"8080...");
+		this.hostPortField = new JSTXNumberField(15,"8080...");
 		this.hostPasswordField = new JSTXPasswordField(15,"Enter session password...");
 
 		this.joinUsernameField = new JSTXTextField(15,"Enter username...");
-		this.joinPortField = new JSTXTextField(15,"8080...");
+		this.joinPortField = new JSTXNumberField(15,"8080...");
 		this.joinPasswordField = new JSTXPasswordField(15,"Enter session password...");
 
 		setupLayout();
 	}
 
-	private boolean verifyPort() { return true; }
+	private boolean verifyPort() {
+		var port = hostPortField.getText();
+		try {
+			var portNumber = Integer.parseInt(port);
+			return portNumber > 0 && portNumber < 65536 && NetworkUtils.isPortAvailable(portNumber);
+		}
+		catch (NumberFormatException _) {
+			return false;
+		}
+	}
 
 	private void handleHost() {
 		var username = hostUsernameField.getText();
