@@ -21,6 +21,7 @@ public class Controller extends JSTXRoundPanel implements JSTXConstants {
 
 	public Controller() {
 		super(Config.getInstance().getWindowRadius(), new GradientPaint(0,0,new Color(0xeeeeee),0,0, new Color(0xbbbbbb)),true);
+		setBorderWidth(BORDER_WIDTH_MIN);
 		setupLayout();
 	}
 
