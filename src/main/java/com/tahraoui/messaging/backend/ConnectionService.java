@@ -47,7 +47,7 @@ public class ConnectionService implements RequestWriter, ResponseReader {
 
 	}
 
-	//region Host/Client Connections
+	//region Host/Client Connection
 	public void host(int port, UserCredentials credentials) {
 		if (isConnected()) {
 			LOGGER.warn("Host already started.");
