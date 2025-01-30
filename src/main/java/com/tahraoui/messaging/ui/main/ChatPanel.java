@@ -5,7 +5,6 @@ import com.tahraoui.jstx.text.JSTXLabel;
 import com.tahraoui.messaging.backend.ConnectionService;
 import com.tahraoui.messaging.backend.data.response.MessageResponse;
 import com.tahraoui.messaging.backend.data.response.SystemMessageResponse;
-import com.tahraoui.messaging.model.Message;
 import com.tahraoui.messaging.ui.listener.ChatBoxListener;
 import com.tahraoui.messaging.ui.main.chat.ChatBoxPane;
 import com.tahraoui.messaging.ui.main.chat.ChatInputPane;
@@ -27,6 +26,8 @@ public class ChatPanel extends JSTXPanel implements ChatBoxListener {
 	public ChatPanel() {
 		super(new BorderLayout());
 
+		ConnectionService.getInstance().setChatBoxListener(this);
+
 		this.chatBoxPane = new ChatBoxPane();
 		this.chatInputPane = new ChatInputPane();
 
@@ -47,13 +48,12 @@ public class ChatPanel extends JSTXPanel implements ChatBoxListener {
 
 	@Override
 	public void receiveMessage(MessageResponse message) {
-		LOGGER.debug("Received message: {}", message.content());
-		var messageItem = new UserMessageItem(false, new Message(message.content()));
+		var connectionInstance = ConnectionService.getInstance();
+		var messageItem = new UserMessageItem(message.senderId() != connectionInstance.getId(), message);
 		addMessage(messageItem);
 	}
 	@Override
 	public void receiveSystemMessage(SystemMessageResponse message) {
-		LOGGER.debug("Received system message: {}", message.content());
 		var messageItem = new SystemMessageItem(message.content());
 		addMessage(messageItem);
 	}

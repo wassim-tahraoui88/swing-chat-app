@@ -9,6 +9,8 @@ import com.tahraoui.messaging.backend.ConnectionService;
 import com.tahraoui.messaging.backend.data.request.MessageRequest;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class ChatInputPane extends JSTXBoxH  {
 
@@ -19,7 +21,17 @@ public class ChatInputPane extends JSTXBoxH  {
 		super(0);
 
 		this.inputField = new JSTXTextField("Type a message...");
-		this.sendButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/app/send.svg"));
+		this.inputField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				var isModifierDown = (e.getModifiersEx() & (KeyEvent.SHIFT_DOWN_MASK | KeyEvent.CTRL_DOWN_MASK | KeyEvent.ALT_DOWN_MASK | KeyEvent.META_DOWN_MASK)) != 0;
+				if (e.getKeyCode() == KeyEvent.VK_ENTER && !isModifierDown) sendButton.doClick(10);
+			}
+			@Override
+			public void keyReleased(KeyEvent e) { super.keyReleased(e); }
+		});
+
+		this.sendButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/app/send.svg",16));
 		this.sendButton.addActionListener(this::sendMessage);
 
 		setupLayout();
