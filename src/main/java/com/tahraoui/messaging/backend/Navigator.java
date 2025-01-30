@@ -25,9 +25,9 @@ public class Navigator {
 			for (var listener : navigationListeners) listener.switchToHome();
 		});
 	}
-	public void switchToChatbox() {
+	public void switchToChat() {
 		EventQueue.invokeLater(() -> {
-			for (var listener : navigationListeners) listener.switchToChatbox();
+			for (var listener : navigationListeners) listener.switchToChat();
 		});
 	}
 }

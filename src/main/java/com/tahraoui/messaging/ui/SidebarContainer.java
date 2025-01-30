@@ -5,13 +5,17 @@ import com.tahraoui.jstx.animation.JSTXAnimator;
 import com.tahraoui.jstx.animation.interpolation.CubicInterpolations;
 import com.tahraoui.jstx.button.JSTXButton;
 import com.tahraoui.jstx.panel.JSTXPanel;
+import com.tahraoui.messaging.backend.ConnectionService;
+import com.tahraoui.messaging.model.Connection;
+import com.tahraoui.messaging.ui.listener.ConnectionListener;
+import com.tahraoui.messaging.ui.listener.NavigationListener;
 import com.tahraoui.messaging.ui.sidebar.SidebarPanel;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-public class SidebarContainer extends JSTXPanel {
+public class SidebarContainer extends JSTXPanel implements ConnectionListener {
 
 	private static final double SIDEBAR_WEIGHT = 0.25;
 
@@ -35,6 +39,8 @@ public class SidebarContainer extends JSTXPanel {
 		this.panel = new SidebarPanel();
 		this.spacePanel = new JSTXPanel();
 		this.spacePanel.add(button);
+
+		ConnectionService.getInstance().setConnectionListener(this);
 
 		setupLayout();
 	}
@@ -73,4 +79,9 @@ public class SidebarContainer extends JSTXPanel {
 			public void onStop() { }
 		},true);
 	}
+
+	@Override
+	public void receiveConnection(Connection connection) { }
+	@Override
+	public void removeConnection(int id) { }
 }

@@ -76,7 +76,7 @@ public class ConnectionService implements RequestWriter, ResponseReader {
 		}
 
 		this.isHost = true;
-//		this.navigator.switchToChatbox();
+		this.navigator.switchToChat();
 		LOGGER.info("Host started on port {}.", port);
 	}
 	public void join(int port, UserCredentials credentials) {
@@ -104,7 +104,7 @@ public class ConnectionService implements RequestWriter, ResponseReader {
 		}
 
 		this.isClient = true;
-		this.navigator.switchToChatbox();
+		this.navigator.switchToChat();
 		LOGGER.debug("Connected to server on port {} with id {}.", port, id);
 	}
 	public void disconnect() {

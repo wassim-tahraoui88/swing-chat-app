@@ -1,26 +1,34 @@
-package com.tahraoui.messaging.ui.home;
+package com.tahraoui.messaging.ui.main;
 
 import com.tahraoui.jstx.JSTXConstants;
+import com.tahraoui.jstx.Themeable;
 import com.tahraoui.jstx.button.JSTXButton;
 import com.tahraoui.jstx.input.JSTXNumberField;
 import com.tahraoui.jstx.input.JSTXPasswordField;
 import com.tahraoui.jstx.input.JSTXTextField;
 import com.tahraoui.jstx.panel.JSTXPanel;
 import com.tahraoui.jstx.text.JSTXLabel;
+import com.tahraoui.jstx.util.GraphicsUtils;
+import com.tahraoui.jstx.util.SvgUtils;
+import com.tahraoui.jstx.util.ThemeConfig;
 import com.tahraoui.messaging.backend.ConnectionService;
 import com.tahraoui.messaging.model.UserCredentials;
 import com.tahraoui.messaging.util.NetworkUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.swing.ImageIcon;
 import javax.swing.JTextField;
+import javax.swing.JToolTip;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.MouseInfo;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class HomePanel extends JSTXPanel implements JSTXConstants {
+public class HomePanel extends JSTXPanel implements JSTXConstants, Themeable {
 
 	private static final Logger LOGGER = LogManager.getLogger(HomePanel.class);
 
@@ -28,8 +36,14 @@ public class HomePanel extends JSTXPanel implements JSTXConstants {
 
 	private final JSTXTextField hostUsernameField, hostPortField, joinUsernameField, joinPortField;
 	private final JSTXPasswordField hostPasswordField, joinPasswordField;
+	private final JToolTip portStatus;
+
+	private final Image infoImage = SvgUtils.getSvgIcon("/icons/popup/info.svg").getImage();
 
 	public HomePanel() {
+
+		var infoIcon = new ImageIcon(GraphicsUtils.ColorUtils.colorizeImage(infoImage, ThemeConfig.getInstance().getSecondaryColor()));
+
 		this.hostUsernameField = new JSTXTextField(15,"Enter username...");
 		this.hostPortField = new JSTXNumberField(15,"8080...");
 		this.hostPasswordField = new JSTXPasswordField(15,"Enter session password...");
@@ -38,7 +52,20 @@ public class HomePanel extends JSTXPanel implements JSTXConstants {
 		this.joinPortField = new JSTXNumberField(15,"8080...");
 		this.joinPasswordField = new JSTXPasswordField(15,"Enter session password...");
 
+		this.portStatus = new JToolTip();
+
+		this.hostPortField.setActionable(infoIcon, _ -> handlePortVerification());
+
 		setupLayout();
+	}
+
+	@Override
+	public void configureTheme() {
+		var themeConfig = ThemeConfig.getInstance();
+		themeConfig.addThemeListener(() -> {
+			var infoIcon = new ImageIcon(GraphicsUtils.ColorUtils.colorizeImage(infoImage, themeConfig.getSecondaryColor()));
+			this.hostPortField.updateIcon(infoIcon);
+		});
 	}
 
 	private boolean verifyPort() {
@@ -50,6 +77,15 @@ public class HomePanel extends JSTXPanel implements JSTXConstants {
 		catch (NumberFormatException _) {
 			return false;
 		}
+	}
+	private void handlePortVerification() {
+		portStatus.setVisible(false);
+
+		portStatus.setTipText(verifyPort() ? "Port number is valid." :"Invalid port number...");
+		var mousePosition = MouseInfo.getPointerInfo().getLocation();
+
+		portStatus.setLocation(mousePosition.x, mousePosition.y);
+		portStatus.setVisible(true);
 	}
 
 	private void handleHost() {
@@ -67,7 +103,6 @@ public class HomePanel extends JSTXPanel implements JSTXConstants {
 //		else ModalFactory.showWarning("Connection Warning", "Port number is invalid...");
 		else LOGGER.warn("Port number is invalid...");
 	}
-
 	private void handleJoin() {
 		var username = joinUsernameField.getText();
 		var port = joinPortField.getText();
