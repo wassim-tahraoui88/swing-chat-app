@@ -17,5 +17,11 @@ public class SystemMessageItem extends AbstractMessageItem {
 		add(label);
 		add(Box.createHorizontalGlue());
 	}
+
+	@Override
+	public boolean isContinuous(AbstractMessageItem other) { return false; }
+
+	@Override
+	public void setContinuous(boolean isContinuous) {}
 }
 

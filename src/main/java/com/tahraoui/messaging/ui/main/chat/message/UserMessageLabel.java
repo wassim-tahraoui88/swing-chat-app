@@ -1,4 +1,4 @@
-package com.tahraoui.messaging.ui.main.chat;
+package com.tahraoui.messaging.ui.main.chat.message;
 
 import com.tahraoui.jstx.JSTXConstants;
 import com.tahraoui.jstx.panel.JSTXPanel;
@@ -7,6 +7,7 @@ import com.tahraoui.jstx.util.GraphicsUtils;
 import com.tahraoui.jstx.util.ThemeConfig;
 
 import java.awt.BasicStroke;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
@@ -15,6 +16,9 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 
 public class UserMessageLabel extends JSTXPanel implements JSTXConstants {
+
+	private static final int BASE_RADIUS = 12;
+	private static final int MINIMUM_MESSAGE_WIDTH = 128;
 
 	private final Insets insets;
 	private final JSTXLabel label;
@@ -27,17 +31,19 @@ public class UserMessageLabel extends JSTXPanel implements JSTXConstants {
 		this.received = received;
 
 		this.label = new JSTXLabel(text);
-		var padding = 2;//borderWidth + BASE_PADDING;
-		this.insets = new Insets(padding,padding,padding,padding);
 
-		if (received) setRadii(0,16);
-		else setRadii(16,0);
+		var padding = MIN_PADDING;
+		this.insets = new Insets(padding, padding, padding, padding);
+
+		if (received) setRadii(BASE_RADIUS,BASE_RADIUS * 2);
+		else setRadii(BASE_RADIUS * 2, BASE_RADIUS);
 
 		var themeConfig = ThemeConfig.getInstance();
 		setBackground(received ? themeConfig.getPrimaryColor() : themeConfig.getSecondaryColor());
 		label.setForeground(received ? themeConfig.getPrimaryTextColor() : themeConfig.getSecondaryTextColor());
 
 		add(label);
+		setMinimumSize(new Dimension(MINIMUM_MESSAGE_WIDTH, getMinimumSize().height));
 
 		configureTheme();
 	}
@@ -62,13 +68,13 @@ public class UserMessageLabel extends JSTXPanel implements JSTXConstants {
 
 	@Override
 	protected void paintComponent(Graphics g) {
-//		super.paintComponent(g);
+		super.paintComponent(g);
 
 		var g2 = (Graphics2D) g.create();
 		GraphicsUtils.setRenderingHints(g2);
 
-		var area = createLeftCorners();
-		area.intersect(createRightCorners());
+		var area = createRightCorners();
+		area.intersect(createLeftCorners());
 		g2.setColor(getBackground());
 		g2.fill(area);
 
@@ -79,18 +85,16 @@ public class UserMessageLabel extends JSTXPanel implements JSTXConstants {
 		g2.dispose();
 	}
 
-	private Area createLeftCorners() {
-		var area = createCornerShape(leftRadius,0, getHeight());
-		area.intersect(createCornerShape(leftRadius,0,0));
-		return area;
-	}
 	private Area createRightCorners() {
-		var width = getWidth();
-		var area = createCornerShape(rightRadius, width, getHeight());
-		area.intersect(createCornerShape(rightRadius, width,0));
+		var area = createCornerShape(rightRadius,0,1);
+		area.intersect(createCornerShape(rightRadius,0,0));
 		return area;
 	}
-
+	private Area createLeftCorners() {
+		var area = createCornerShape(leftRadius,1,1);
+		area.intersect(createCornerShape(leftRadius,1,0));
+		return area;
+	}
 	private Area createCornerShape(int radius, int x, int y) {
 		var width = getWidth() - borderWidth * 2;
 		var height = getHeight() - borderWidth * 2;
@@ -100,8 +104,8 @@ public class UserMessageLabel extends JSTXPanel implements JSTXConstants {
 		var roundX = Math.min(width, radius);
 		var roundY = Math.min(height, radius);
 		var area = new Area(new RoundRectangle2D.Double(areaX, areaY, width, height, roundX, roundY));
-		area.add(new Area(new Rectangle2D.Double(x == 0 ? roundX / 2f : areaX, areaY, width - roundX / 2f, height)));
-		area.add(new Area(new Rectangle2D.Double(areaX, y == 0 ? roundY / 2f : areaY, width, height - roundY / 2f)));
+		area.add(new Area(new Rectangle2D.Double(x == 0 ? areaX : areaX + width - roundX, areaY, roundX, height)));
+		area.add(new Area(new Rectangle2D.Double(areaX, y == 0 ? areaY : areaY + height - roundY, width, roundY)));
 		return area;
 	}
 }
