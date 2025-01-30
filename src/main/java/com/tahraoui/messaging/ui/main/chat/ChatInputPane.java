@@ -19,7 +19,7 @@ public class ChatInputPane extends JSTXBoxH  {
 		super(0);
 
 		this.inputField = new JSTXTextField("Type a message...");
-		this.sendButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/gui/send.svg"));
+		this.sendButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/app/send.svg"));
 		this.sendButton.addActionListener(this::sendMessage);
 
 		setupLayout();
