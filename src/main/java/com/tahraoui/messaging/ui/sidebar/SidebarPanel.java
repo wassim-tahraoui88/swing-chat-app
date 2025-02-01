@@ -1,6 +1,6 @@
 package com.tahraoui.messaging.ui.sidebar;
 
-import com.tahraoui.jstx.panel.JSTXPanel;
+import com.tahraoui.jstx.container.JSTXPanel;
 
 public class SidebarPanel extends JSTXPanel {
 

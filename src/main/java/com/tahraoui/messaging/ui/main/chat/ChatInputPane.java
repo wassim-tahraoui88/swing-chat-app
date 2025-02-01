@@ -2,37 +2,35 @@ package com.tahraoui.messaging.ui.main.chat;
 
 import com.tahraoui.jstx.button.JSTXAbstractButton;
 import com.tahraoui.jstx.button.JSTXIconButton;
-import com.tahraoui.jstx.input.JSTXTextField;
-import com.tahraoui.jstx.panel.JSTXBoxH;
-import com.tahraoui.jstx.util.GraphicsUtils;
+import com.tahraoui.jstx.container.JSTXGlassPanel;
 import com.tahraoui.jstx.util.SvgUtils;
-import com.tahraoui.jstx.util.ThemeConfig;
 import com.tahraoui.jstx.util.Utils;
 import com.tahraoui.messaging.backend.ConnectionService;
 import com.tahraoui.messaging.backend.data.request.MessageRequest;
 
-import javax.swing.ImageIcon;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
-import java.awt.Image;
+import javax.swing.JTextField;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
 
-public class ChatInputPane extends JSTXBoxH  {
+public class ChatInputPane extends JSTXGlassPanel {
 
-	private final JSTXTextField inputField;
-	private final JSTXAbstractButton sendButton;
+	private final JTextField inputField;
+	private final JSTXAbstractButton sendButton, attachmentButton;
 	private final JFileChooser fileChooser = new JFileChooser(Utils.DESKTOP_DIRECTORY);
-	private final Image image;
 
 	public ChatInputPane() {
-		super(0);
+		super(0.2f, Color.LIGHT_GRAY);
+		this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
-		this.image = SvgUtils.getSvgIcon("/icons/app/attachment.svg").getImage();
-
-		var icon = GraphicsUtils.ColorUtils.colorizeImage(image, ThemeConfig.getInstance().getSecondaryColor());
-
-		this.inputField = new JSTXTextField("Type a message...");
+		this.inputField = new JTextField();
+		this.inputField.setBorder(null);
+		this.inputField.setOpaque(false);
 		this.inputField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -42,25 +40,22 @@ public class ChatInputPane extends JSTXBoxH  {
 			@Override
 			public void keyReleased(KeyEvent e) { super.keyReleased(e); }
 		});
-		this.inputField.setActionable(new ImageIcon(icon), this::attachFile);
 
-		this.sendButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/app/send.svg",16));
+		this.sendButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/app/send.svg",16),false,4);
 		this.sendButton.addActionListener(this::sendMessage);
+
+		this.attachmentButton = new JSTXIconButton(SvgUtils.getSvgIcon("/icons/app/attachment.svg",16),false,4);
+		this.attachmentButton.addActionListener(this::attachFile);
 
 		setupLayout();
 	}
 
-	@Override
-	public void configureTheme() {
-		var theme = ThemeConfig.getInstance();
-		theme.addThemeListener(() -> {
-			var icon = GraphicsUtils.ColorUtils.colorizeImage(image, ThemeConfig.getInstance().getSecondaryColor());
-			inputField.updateIcon(new ImageIcon(icon));
-		});
-	}
-
 	private void setupLayout() {
+		setOpaque(true);
+		add(attachmentButton);
+		add(Box.createHorizontalStrut(4));
 		add(inputField);
+		add(Box.createHorizontalStrut(4));
 		add(sendButton);
 	}
 
@@ -76,7 +71,9 @@ public class ChatInputPane extends JSTXBoxH  {
 		var message = inputField.getText();
 		if (message.isEmpty()) return;
 		var connectionInstance = ConnectionService.getInstance();
-		connectionInstance.writeRequest(new MessageRequest(connectionInstance.getId(), connectionInstance.getUsername(), connectionInstance.encryptMessage(message)));
+		var encryptedMessage = connectionInstance.encryptMessage(message);
+		System.out.printf("Sending message: %s%n", Arrays.toString(encryptedMessage));
+		connectionInstance.writeRequest(new MessageRequest(connectionInstance.getId(), connectionInstance.getUsername(), encryptedMessage));
 		inputField.setText(null);
 	}
 }

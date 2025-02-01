@@ -1,7 +1,8 @@
 package com.tahraoui.messaging.ui.main.chat.message;
 
-import com.tahraoui.jstx.panel.JSTXPanel;
+import com.tahraoui.jstx.container.JSTXPanel;
 import com.tahraoui.jstx.text.JSTXLabel;
+import com.tahraoui.messaging.backend.ConnectionService;
 import com.tahraoui.messaging.backend.data.response.MessageResponse;
 
 import javax.swing.Box;
@@ -29,7 +30,9 @@ public class UserMessageItem extends AbstractMessageItem {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
-		var messageLabel = new UserMessageLabel(received, message.content());
+		var decryptedMessage = ConnectionService.getInstance().decryptMessage(message.data());
+
+		var messageLabel = new UserMessageLabel(received, decryptedMessage);
 
 		if (received && message.senderName() != null && !message.senderName().isBlank()) {
 			this.senderLabel = new JSTXLabel(message.senderName());

@@ -4,7 +4,7 @@ import com.tahraoui.jstx.animation.AnimatorAdapter;
 import com.tahraoui.jstx.animation.JSTXAnimator;
 import com.tahraoui.jstx.animation.interpolation.CubicInterpolations;
 import com.tahraoui.jstx.button.JSTXButton;
-import com.tahraoui.jstx.panel.JSTXPanel;
+import com.tahraoui.jstx.container.JSTXPanel;
 import com.tahraoui.messaging.backend.ConnectionService;
 import com.tahraoui.messaging.model.Connection;
 import com.tahraoui.messaging.ui.listener.ConnectionListener;

@@ -6,7 +6,7 @@ import com.tahraoui.jstx.button.JSTXButton;
 import com.tahraoui.jstx.input.JSTXNumberField;
 import com.tahraoui.jstx.input.JSTXPasswordField;
 import com.tahraoui.jstx.input.JSTXTextField;
-import com.tahraoui.jstx.panel.JSTXPanel;
+import com.tahraoui.jstx.container.JSTXPanel;
 import com.tahraoui.jstx.text.JSTXLabel;
 import com.tahraoui.jstx.util.GraphicsUtils;
 import com.tahraoui.jstx.util.SvgUtils;

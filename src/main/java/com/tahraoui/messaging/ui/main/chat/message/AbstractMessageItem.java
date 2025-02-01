@@ -1,6 +1,6 @@
 package com.tahraoui.messaging.ui.main.chat.message;
 
-import com.tahraoui.jstx.panel.JSTXPanel;
+import com.tahraoui.jstx.container.JSTXPanel;
 
 import javax.swing.BoxLayout;
 

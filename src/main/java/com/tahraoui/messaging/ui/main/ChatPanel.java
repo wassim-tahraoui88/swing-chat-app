@@ -1,6 +1,6 @@
 package com.tahraoui.messaging.ui.main;
 
-import com.tahraoui.jstx.panel.JSTXPanel;
+import com.tahraoui.jstx.container.JSTXPanel;
 import com.tahraoui.jstx.text.JSTXLabel;
 import com.tahraoui.messaging.backend.ConnectionService;
 import com.tahraoui.messaging.backend.data.response.MessageResponse;

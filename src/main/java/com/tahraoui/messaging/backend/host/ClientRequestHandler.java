@@ -19,6 +19,7 @@ import javax.crypto.spec.IvParameterSpec;
 import java.io.IOException;
 import java.io.ObjectOutput;
 import java.security.GeneralSecurityException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -92,7 +93,8 @@ public class ClientRequestHandler implements RequestWriter {
 		broadcastResponse(new SystemMessageResponse("%s [%d] has been kicked from the chat.".formatted(request.username(), request.userId())));
 	}
 	private void handleMessageRequest(MessageRequest request) {
-		var response = new MessageResponse(request.senderId(), request.senderName(), decryptMessage(request.data()));
+		System.out.printf("Received message: %s%n", Arrays.toString(request.data()));
+		var response = new MessageResponse(request.senderId(), request.senderName(), request.data());
 		broadcastResponse(response);
 	}
 

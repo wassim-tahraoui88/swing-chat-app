@@ -1,15 +1,15 @@
 package com.tahraoui.messaging.ui;
 
+import com.tahraoui.core.Config;
 import com.tahraoui.jstx.JSTXConstants;
 import com.tahraoui.jstx.button.JSTXIconButton;
 import com.tahraoui.jstx.extension.DragExtension;
 import com.tahraoui.jstx.extension.MaximizeExtension;
 import com.tahraoui.jstx.extension.MinimizeExtension;
 import com.tahraoui.jstx.init.JSTXBootstrapper;
-import com.tahraoui.jstx.panel.JSTXBoxH;
-import com.tahraoui.jstx.panel.JSTXPanel;
+import com.tahraoui.jstx.container.layout.JSTXBoxH;
+import com.tahraoui.jstx.container.JSTXPanel;
 import com.tahraoui.jstx.text.JSTXLabel;
-import com.tahraoui.jstx.util.Config;
 import com.tahraoui.jstx.util.SvgUtils;
 
 import javax.swing.Box;
@@ -57,9 +57,9 @@ public class HeaderPanel extends JSTXPanel implements JSTXConstants {
 		maximizePanel.add(restoreButton);
 
 		var buttonsPanel = new JSTXBoxH();
-		buttonsPanel.addItem(minimizeButton);
-		buttonsPanel.addItem(maximizePanel);
-		buttonsPanel.addItem(closeButton);
+		buttonsPanel.add(minimizeButton);
+		buttonsPanel.add(maximizePanel);
+		buttonsPanel.add(closeButton);
 
 		var separator = new JSeparator(JSeparator.HORIZONTAL);
 		var separatorBox = Box.createVerticalBox();

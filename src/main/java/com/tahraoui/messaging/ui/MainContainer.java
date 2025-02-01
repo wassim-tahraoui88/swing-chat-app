@@ -1,7 +1,7 @@
 package com.tahraoui.messaging.ui;
 
 import com.tahraoui.jstx.JSTXConstants;
-import com.tahraoui.jstx.panel.JSTXPanel;
+import com.tahraoui.jstx.container.JSTXPanel;
 import com.tahraoui.messaging.backend.ConnectionService;
 import com.tahraoui.messaging.ui.listener.NavigationListener;
 import com.tahraoui.messaging.ui.main.ChatPanel;

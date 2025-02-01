@@ -2,9 +2,9 @@ package com.tahraoui.messaging;
 
 import com.tahraoui.jstx.JSTXConstants;
 import com.tahraoui.jstx.init.JSTXBootstrapper;
-import com.tahraoui.jstx.panel.JSTXPanel;
-import com.tahraoui.jstx.panel.JSTXRoundPanel;
-import com.tahraoui.jstx.util.Config;
+import com.tahraoui.jstx.container.JSTXPanel;
+import com.tahraoui.jstx.container.JSTXRoundPanel;
+import com.tahraoui.jstx.util.JSTXConfig;
 import com.tahraoui.messaging.ui.MainContainer;
 import com.tahraoui.messaging.ui.HeaderPanel;
 import com.tahraoui.messaging.ui.SidebarContainer;
@@ -20,7 +20,7 @@ public class Controller extends JSTXRoundPanel implements JSTXConstants {
 	private final Insets insets = new Insets(BASE_PADDING, BASE_PADDING, BASE_PADDING, BASE_PADDING);
 
 	public Controller() {
-		super(Config.getInstance().getWindowRadius(), new GradientPaint(0,0,new Color(0xeeeeee),0,0, new Color(0xbbbbbb)),true);
+		super(JSTXConfig.getInstance().getWindowRadius(), new GradientPaint(0,0,new Color(0xeeeeee),0,0, new Color(0xbbbbbb)),true);
 		setBorderWidth(BORDER_WIDTH_MIN);
 		setupLayout();
 	}
@@ -46,7 +46,7 @@ public class Controller extends JSTXRoundPanel implements JSTXConstants {
 	@Override
 	public Insets getInsets() { return insets; }
 
-	public static void main() {
+	public static void main(String[] args) {
 		JSTXBootstrapper.getInstance().init(Controller::new);
 
 	}
